@@ -1,0 +1,10 @@
+# CultStudio
+
+> CultStudio is an independent creative technology studio offering web development, software, practical AI automation, digital growth, and creative design.
+
+Examples on the website are clearly labelled concept explorations. Contact the studio through the project enquiry form to discuss a real project.
+
+## Pages
+
+- [Home](/): Services, concept explorations, process, FAQs, and project enquiry form.
+- [Privacy notice](/privacy.html): Information about enquiry submissions and Formspree processing.
