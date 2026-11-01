@@ -18,6 +18,42 @@ import { FORMSPREE_FORM_ID } from './config';
 
 const OrbitalScene = lazy(() => import('./components/OrbitalScene'));
 
+const pageContent: Record<string, { title: string; description: string; intro: string; points: string[]; label: string }> = {
+  '/contact': { title: 'Let’s make something matter.', description: 'Contact CultStudio about your website, software, automation, growth or creative project.', intro: 'Tell us what you’re trying to make, improve or untangle. A rough idea is enough to start a useful conversation.', points: ['Share your name and the best email to reach you.', 'Choose the kind of help you are looking for.', 'Add a little context about the goal or challenge.', 'Your details are used to respond to your enquiry. See our privacy notice.'], label: 'PROJECT ENQUIRY' },
+  '/services': { title: 'Services with a point of view.', description: 'Explore CultStudio services across web development, AI and automation, digital growth and creative branding.', intro: 'The right solution starts with the real problem. Explore the ways we can help shape, build and improve your digital presence.', points: ['Web development — websites, web applications and custom software.', 'AI & automation — useful workflows, integrations and AI-assisted tools.', 'Digital growth — SEO foundations, conversion improvements and campaign support.', 'Creative & branding — visual identity, graphic design and digital experiences.'], label: 'WHAT WE DO' },
+  '/services/web-development': { title: 'Websites built to do more.', description: 'CultStudio web development for responsive websites, web applications, e-commerce and custom software.', intro: 'A useful website makes the next step clear. We plan and build digital experiences around your audience, content and business needs.', points: ['Responsive marketing and portfolio websites.', 'Web applications and focused product interfaces.', 'E-commerce experiences and storefront improvements.', 'Custom software and practical integrations, scoped to the project.'], label: 'WEB DEVELOPMENT' },
+  '/services/ai-automation': { title: 'Make repetitive work flow.', description: 'Practical AI and workflow automation planned around real business processes.', intro: 'Automation is most useful when it solves a specific bottleneck. We map the work first, then identify where integrations or AI assistance can help.', points: ['Workflow mapping and opportunity review.', 'Lead capture, routing and notification flows.', 'AI-assisted tools with clear human review points.', 'Integrations between existing business systems where supported.'], label: 'AI & AUTOMATION' },
+  '/services/digital-growth': { title: 'Build clearer paths to growth.', description: 'Digital growth support including SEO foundations, conversion improvements and content direction.', intro: 'Growth work begins with a clearer experience and sound foundations. We help make your digital presence easier to understand, find and act on.', points: ['Technical and on-page SEO foundations.', 'Content structure and landing page improvements.', 'Conversion path reviews and practical recommendations.', 'Campaign and measurement planning aligned to your goals.'], label: 'DIGITAL GROWTH' },
+  '/services/creative-branding': { title: 'Give good ideas a visual voice.', description: 'Creative and branding services for visual identity, graphic design and digital experiences.', intro: 'A coherent visual system helps people recognise and understand your work. We shape a distinctive direction and carry it across the touchpoints that matter.', points: ['Visual identity direction and practical brand assets.', 'Typography, colour and layout systems.', 'Digital interface and campaign creative.', 'Graphics for web and social channels.'], label: 'CREATIVE & BRANDING' },
+  '/work': { title: 'Concepts made to think with.', description: 'Explore CultStudio concept explorations in web design, automation and visual identity.', intro: 'These independent explorations show how we approach different kinds of digital challenges. They are concepts, not commissioned client results.', points: ['KINFORM — fitness website concept focused on class discovery.', 'FLOWSTATE — enquiry routing and workflow automation concept.', 'FORME — visual identity study for a distinctive digital presence.'], label: 'SELECTED WORK' },
+  '/work/kinform': { title: 'KINFORM — move with purpose.', description: 'A CultStudio fitness business website concept exploration.', intro: 'KINFORM explores a clearer online home for a fitness business, with class discovery and coaching information at the centre.', points: ['Challenge: make classes, coaching and next steps easy to find.', 'Direction: energetic warm colour, confident type and clear information hierarchy.', 'Approach: prioritise class discovery, coaching details and a concise enquiry path.', 'Status: independent website concept; no client outcome is claimed.'], label: 'WEBSITE CONCEPT · 01' },
+  '/work/flowstate': { title: 'FLOWSTATE — make the next step flow.', description: 'A CultStudio lead and workflow automation concept exploration.', intro: 'FLOWSTATE demonstrates a simple way an enquiry might move from capture to organisation and human follow-up.', points: ['Challenge: reduce manual sorting of incoming enquiries.', 'Direction: visualise each step so the flow is understandable.', 'Approach: capture, organise, then notify the right person.', 'Status: illustrative automation concept; no live system or result is claimed.'], label: 'AUTOMATION CONCEPT · 02' },
+  '/work/forme': { title: 'FORME — form follows feeling.', description: 'A CultStudio creative identity concept exploration.', intro: 'FORME explores how a flexible typographic and colour system can create a recognisable digital voice.', points: ['Challenge: create a consistent identity across touchpoints.', 'Direction: expressive typography paired with a considered palette.', 'Approach: carry the identity across web and social applications.', 'Status: visual identity concept; not a commissioned client identity.'], label: 'BRAND CONCEPT · 03' },
+  '/studio': { title: 'A small studio for big ideas.', description: 'Learn about CultStudio’s philosophy and approach to creative technology.', intro: 'CultStudio brings design, engineering, automation and creative thinking into one collaborative studio. We care about ideas that look considered and work in real life.', points: ['Start with the people using the experience.', 'Make scope, trade-offs and next steps clear.', 'Bring design and implementation into the same conversation.', 'Treat the details as part of the whole experience.'], label: 'ABOUT CULTSTUDIO' },
+};
+
+function ContactForm({ onSubmit, submitting, sent, error, id = 'contact-form' }: { onSubmit: (event: FormEvent<HTMLFormElement>) => void; submitting: boolean; sent: boolean; error: string; id?: string }) {
+  return <form id={id} className="contact-form" onSubmit={onSubmit} aria-busy={submitting}>
+    <div className="form-heading"><span>PROJECT ENQUIRY</span><span>SECURE FORM</span></div>
+    <label className="form-honeypot" aria-hidden="true">Leave this field empty<input name="_gotcha" type="text" tabIndex={-1} autoComplete="off" /></label>
+    <div className="form-row"><label>Your name<input required name="name" autoComplete="name" placeholder="Name" /></label><label>Your email<input required name="email" type="email" autoComplete="email" placeholder="you@company.com" /></label></div>
+    <label>Business name <span className="optional-label">OPTIONAL</span><input name="company" autoComplete="organization" placeholder="Your business" /></label>
+    <label>What do you need help with?<select name="service" defaultValue=""><option value="" disabled>Choose a service</option><option>Website or software</option><option>AI or automation</option><option>Digital marketing</option><option>Branding or creative</option><option>Not sure yet</option></select></label>
+    <label>Estimated budget<select name="budget" defaultValue=""><option value="" disabled>Select a range (optional)</option><option>Under ₹10,000</option><option>₹10,000–₹25,000</option><option>₹25,000–₹50,000</option><option>₹50,000+</option><option>Need guidance</option></select></label>
+    <label>Tell us about the project<textarea required name="details" rows={4} placeholder="A little context, your goals and what success looks like…" /></label>
+    <label className="consent-label"><input required type="checkbox" name="consent" /> I agree that CultStudio may use these details to respond, with Formspree processing this submission. <a href="/privacy.html">Privacy notice</a>.</label>
+    <button className="button button-primary form-submit" type="submit" disabled={submitting}>{submitting ? 'Sending…' : sent ? 'Send another enquiry' : 'Send project brief'} <ArrowUpRight size={17}/></button>
+    {error && <p className="form-message form-message--error" role="alert">{error}</p>}{sent && <p className="form-message" role="status" aria-live="polite">Your enquiry was submitted successfully. We’ll be in touch.</p>}
+    <p className="form-privacy">Your submission is securely sent to Formspree and may be stored in its dashboard. See our <a href="/privacy.html">privacy notice</a>.</p>
+  </form>;
+}
+
+function ContentPage({ path, formProps }: { path: string; formProps: { onSubmit: (event: FormEvent<HTMLFormElement>) => void; submitting: boolean; sent: boolean; error: string } }) {
+  const page = pageContent[path];
+  if (!page) return <main id="main-content" className="route-page route-404"><p className="eyebrow">404 · PAGE NOT FOUND</p><h1>That page wandered off.</h1><p>Try the main pages or head back to the homepage.</p><a className="button button-primary" href="/">Back to CultStudio <ArrowRight size={16}/></a></main>;
+  return <main id="main-content" className={`route-page${path === '/contact' ? ' route-page--contact' : ''}`}><nav className="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>{page.label}</span></nav><section className="route-hero"><div className="route-hero__art" aria-hidden="true"><span>{path.includes('/work') ? '✳' : '↗'}</span><i/><b/></div><div className="route-hero__copy"><SectionLabel>{page.label}</SectionLabel><h1>{page.title}</h1><p>{page.intro}</p>{path !== '/contact' && <a className="button button-primary" href="/contact">Talk about a project <ArrowUpRight size={17}/></a>}</div></section>{path === '/contact' ? <section className="contact-section route-contact-section"><div className="contact-layout"><div className="contact-copy"><SectionLabel>LET’S START WITH THE IDEA</SectionLabel><h2>Tell us<br/><em>what’s next.</em></h2><p>Share the goal, challenge, or early thought. We’ll respond using the contact details you provide.</p><p><a href="mailto:cultstudio16@gmail.com">cultstudio16@gmail.com</a></p></div><ContactForm {...formProps} id="contact-page-form" /></div></section> : <section className="route-details"><SectionLabel>THE DETAILS</SectionLabel><div className="route-detail-grid">{page.points.map((point, index) => <article key={point}><span>{String(index + 1).padStart(2, '0')}</span><p>{point}</p></article>)}</div></section>}<section className="route-cta"><p>Have a question or an idea taking shape?</p><a href="/contact">Let’s talk <ArrowUpRight size={17}/></a></section></main>;
+}
+
 const services = [
   {
     number: '01',
@@ -98,7 +134,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
   return <div className="section-label"><span className="section-label__dot" />{children}</div>;
 }
 
-function App() {
+function App({ pagePath = '/' }: { pagePath?: string }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
@@ -119,9 +155,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const items = document.querySelectorAll<HTMLElement>('.section-block, .intro-strip, .why-section, .faq-section, .contact-layout, .project-card, .service-card, .process-step');
+    const items = document.querySelectorAll<HTMLElement>('.section-block, .intro-strip, .why-section, .faq-section, .contact-layout, .project-card, .service-card, .process-step, .studio-note');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-    items.forEach((item) => item.classList.add('motion-ready'));
+    items.forEach((item, index) => {
+      item.classList.add('motion-ready');
+      item.style.setProperty('--reveal-index', String(index % 5));
+    });
     const reveal = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -179,7 +218,7 @@ function App() {
     <div className="site-shell">
       <div className="topline"><span>DESIGN · ENGINEERING · AUTOMATION</span><span>INDEPENDENT CREATIVE TECHNOLOGY STUDIO</span></div>
       <header className="site-header">
-        <a href="#home" className="brand-lockup" onClick={closeMenu}>
+        <a href="/" className="brand-lockup" onClick={closeMenu}>
           <BrandMark />
           <span className="brand-wordmark">CULT<span>STUDIO</span><small>DIGITAL · TECH · CREATIVE</small></span>
         </a>
@@ -187,16 +226,16 @@ function App() {
           {mobileOpen ? <X size={21} /> : <Menu size={21} />}
         </button>
         <nav id="primary-navigation" className={`main-nav${mobileOpen ? ' main-nav--open' : ''}`} aria-label="Main navigation">
-          <a href="#work" onClick={closeMenu}>Work</a>
-          <a href="#services" onClick={closeMenu}>Services</a>
-          <a href="#studio" onClick={closeMenu}>Studio</a>
-          <a href="#process" onClick={closeMenu}>Process</a>
-          <a href="#faq" onClick={closeMenu}>FAQ</a>
-          <a className="nav-cta" href="#contact" onClick={closeMenu}>Start a project <ArrowUpRight size={15} /></a>
+          <a href="/work" onClick={closeMenu}>Work</a>
+          <a href="/services" onClick={closeMenu}>Services</a>
+          <a href="/studio" onClick={closeMenu}>Studio</a>
+          <a href="/#process" onClick={closeMenu}>Process</a>
+          <a href="/#faq" onClick={closeMenu}>FAQ</a>
+          <a className="nav-cta" href="/contact" onClick={closeMenu}>Start a project <ArrowUpRight size={15} /></a>
         </nav>
       </header>
 
-      <main id="main-content">
+      {pagePath !== '/' && pagePath !== '/privacy.html' ? <ContentPage path={pagePath} formProps={{ onSubmit: handleSubmit, submitting: isSubmitting, sent, error }} /> : <main id="main-content">
         <section className="hero section-wrap" id="home">
           <div className="hero-copy">
             <div className="eyebrow"><span className="eyebrow-pulse" />INDEPENDENT CREATIVE TECHNOLOGY STUDIO</div>
@@ -213,6 +252,10 @@ function App() {
           <div className="hero-art" aria-hidden="true"><div className="hero-art__glow"/><div className="hero-shape hero-shape--circle"/><div className="hero-shape hero-shape--square"/><div className="hero-shape hero-shape--spark">✳</div>{sceneEnabled ? <Suspense fallback={<div className="hero-scene hero-scene--fallback"/>}><OrbitalScene /></Suspense> : <div className="hero-scene hero-scene--fallback"/>}<span className="scene-caption"><span/> FORM, IN MOTION</span></div>
           <div className="hero-bottomline"><span>WEB & SOFTWARE</span><span>AI & AUTOMATION</span><span>DESIGN & GROWTH</span></div>
         </section>
+
+        <div className="studio-marquee" aria-hidden="true">
+          <div className="studio-marquee__track" aria-hidden="true"><span>DESIGN IT <b>✳</b> BUILD IT <b>↗</b> MAKE IT MATTER <b>✳</b> DESIGN IT <b>↗</b> BUILD IT <b>✳</b> MAKE IT MATTER <b>↗</b></span></div>
+        </div>
 
         <section className="intro-strip section-wrap">
           <div className="intro-strip__mark"><Sparkles size={19}/></div>
@@ -279,28 +322,15 @@ function App() {
         <section className="contact-section" id="contact">
           <div className="section-wrap contact-layout">
             <div className="contact-copy"><SectionLabel>HAVE SOMETHING IN MIND?</SectionLabel><h2>Let’s make<br/><em>it useful.</em></h2><p>Tell us a little about what you’re building, what’s getting in the way or what you want to improve. We’ll take it from there.</p><div className="contact-aside"><span className="contact-aside__icon"><Send size={17}/></span><span><b>Every good project starts with a conversation.</b><small>No pressure. Just a clear first step.</small></span></div></div>
-            <form className="contact-form" onSubmit={handleSubmit} aria-busy={isSubmitting}>
-              <div className="form-heading"><span>PROJECT ENQUIRY</span><span>SECURE FORM</span></div>
-              <label className="form-honeypot" aria-hidden="true">Leave this field empty<input name="_gotcha" type="text" tabIndex={-1} autoComplete="off" /></label>
-              <div className="form-row"><label>Your name<input required name="name" autoComplete="name" placeholder="Name" /></label><label>Your email<input required name="email" type="email" autoComplete="email" placeholder="you@company.com" /></label></div>
-              <label>Business name <span className="optional-label">OPTIONAL</span><input name="company" autoComplete="organization" placeholder="Your business" /></label>
-              <label>What do you need help with?<select name="service" defaultValue=""><option value="" disabled>Choose a service</option><option>Website or software</option><option>AI or automation</option><option>Digital marketing</option><option>Branding or creative</option><option>Not sure yet</option></select></label>
-              <label>Estimated budget<select name="budget" defaultValue=""><option value="" disabled>Select a range (optional)</option><option>Under ₹10,000</option><option>₹10,000–₹25,000</option><option>₹25,000–₹50,000</option><option>₹50,000+</option><option>Need guidance</option></select></label>
-              <label>Tell us about the project<textarea required name="details" rows={4} placeholder="A little context, your goals and what success looks like…"/></label>
-              <label className="consent-label"><input required type="checkbox" name="consent" /> I agree that CultStudio may use these details to respond, with Formspree processing this submission. <a href="/privacy.html">Privacy notice</a>.</label>
-              <button className="button button-primary form-submit" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Sending…' : sent ? 'Send another enquiry' : 'Send project brief'} <ArrowUpRight size={17}/></button>
-              {error && <p className="form-message form-message--error" role="alert">{error}</p>}
-              {sent && <p className="form-message" role="status" aria-live="polite">Your enquiry was submitted successfully. We’ll be in touch.</p>}
-              <p className="form-privacy">Your submission is securely sent to Formspree and may be stored in its dashboard. See our <a href="/privacy.html">privacy notice</a>.</p>
-            </form>
+            <ContactForm onSubmit={handleSubmit} submitting={isSubmitting} sent={sent} error={error} />
           </div>
         </section>
-      </main>
+      </main>}
 
       <footer className="site-footer section-wrap">
-        <a href="#home" className="brand-lockup brand-lockup--footer"><BrandMark small/><span className="brand-wordmark">CULT<span>STUDIO</span><small>DIGITAL · TECH · CREATIVE</small></span></a>
+        <a href="/" className="brand-lockup brand-lockup--footer"><BrandMark small/><span className="brand-wordmark">CULT<span>STUDIO</span><small>DIGITAL · TECH · CREATIVE</small></span></a>
         <span className="footer-note">Ideas into digital experiences.</span>
-        <div className="footer-links"><a href="#work">Work</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="/privacy.html">Privacy</a></div>
+        <div className="footer-links"><a href="/work">Work</a><a href="/services">Services</a><a href="/studio">Studio</a><a href="/#faq">FAQ</a><a href="/contact">Contact</a><a href="/privacy.html">Privacy</a></div>
         <span className="copyright">© {new Date().getFullYear()} CultStudio</span>
       </footer>
     </div>
