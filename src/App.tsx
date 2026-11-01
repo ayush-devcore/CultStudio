@@ -199,9 +199,9 @@ function App() {
       <main id="main-content">
         <section className="hero section-wrap" id="home">
           <div className="hero-copy">
-            <div className="eyebrow"><span className="eyebrow-pulse" />INDEPENDENT DIGITAL STUDIO</div>
-            <h1 className="hero-brand-title"><span className="hero-brand-title__cult">Cult</span><span className="hero-brand-title__studios">Studio</span></h1>
-            <p className="hero-manifesto">Make your next <em>big idea real.</em></p>
+            <div className="eyebrow"><span className="eyebrow-pulse" />INDEPENDENT CREATIVE TECHNOLOGY STUDIO</div>
+            <h1 className="hero-brand-title"><span className="hero-brand-title__cult">WE MAKE</span><span className="hero-brand-title__studios">DIGITAL</span><span className="hero-brand-title__matter">MATTER.</span></h1>
+            <p className="hero-manifesto">GOOD IDEAS. <em>BIG ENERGY.</em></p>
             <p className="hero-description">We shape clear, useful digital experiences across web, AI and creative — from first thought to final detail.</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#contact">Start a project <ArrowUpRight size={17} /></a>
@@ -210,7 +210,7 @@ function App() {
             <div className="hero-footnote"><span className="tiny-star">✳</span> THOUGHTFUL BY DESIGN. BUILT TO WORK.</div>
           </div>
 
-          <div className="hero-art" aria-hidden="true"><div className="hero-art__glow"/>{sceneEnabled ? <Suspense fallback={<div className="hero-scene hero-scene--fallback"/>}><OrbitalScene /></Suspense> : <div className="hero-scene hero-scene--fallback"/>}<span className="scene-caption"><span/> FORM, IN MOTION</span></div>
+          <div className="hero-art" aria-hidden="true"><div className="hero-art__glow"/><div className="hero-shape hero-shape--circle"/><div className="hero-shape hero-shape--square"/><div className="hero-shape hero-shape--spark">✳</div>{sceneEnabled ? <Suspense fallback={<div className="hero-scene hero-scene--fallback"/>}><OrbitalScene /></Suspense> : <div className="hero-scene hero-scene--fallback"/>}<span className="scene-caption"><span/> FORM, IN MOTION</span></div>
           <div className="hero-bottomline"><span>WEB & SOFTWARE</span><span>AI & AUTOMATION</span><span>DESIGN & GROWTH</span></div>
         </section>
 
