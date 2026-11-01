@@ -14,6 +14,7 @@ import {
   Workflow,
   X,
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import { FORMSPREE_FORM_ID } from './config';
 
 const OrbitalScene = lazy(() => import('./components/OrbitalScene'));
@@ -333,6 +334,7 @@ function App({ pagePath = '/' }: { pagePath?: string }) {
         <div className="footer-links"><a href="/work">Work</a><a href="/services">Services</a><a href="/studio">Studio</a><a href="/#faq">FAQ</a><a href="/contact">Contact</a><a href="/privacy.html">Privacy</a></div>
         <span className="copyright">© {new Date().getFullYear()} CultStudio</span>
       </footer>
+      <Analytics />
     </div>
     </>
   );
